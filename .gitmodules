@@ -5,6 +5,3 @@
 [submodule "core"]
 	path = app/src/main/jni
 	url = https://github.com/RavenProject/core-mobile-assets.git
-[submodule "app/src/main/jni"]
-	path = app/src/main/jni
-	url = https://github.com/RavenProject/core-mobile-assets.git
