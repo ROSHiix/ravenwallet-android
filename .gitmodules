@@ -1,0 +1,3 @@
+[submodule "spv"]
+	path = core-mobile-assets
+	url = https://github.com/RavenProject/core-mobile-assets.git
