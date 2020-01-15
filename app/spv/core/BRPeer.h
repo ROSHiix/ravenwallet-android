@@ -42,7 +42,7 @@ d#include <Foundation/Foundation.h>
 #define _peer_log(...) NSLog(__VA_ARGS__)
 #elif defined(__ANDROID__)
 #include <android/log.h>
-#define _peer_log(...) __android_log_print(ANDROID_LOG_INFO, "bread", __VA_ARGS__)
+#define _peer_log(...) __android_log_print(ANDROID_LOG_INFO, "raven", __VA_ARGS__)
 #else
 #include <stdio.h>
 #define _peer_log(...) printf(__VA_ARGS__)
@@ -65,7 +65,6 @@ extern "C" {
 
 #define VERSION "0.1.1"
 #define USER_AGENT "/rvnwallet:" VERSION "/"
-
 // explanation of message types at: https://en.bitcoin.it/wiki/Protocol_specification
 #define MSG_VERSION     "version"
 #define MSG_VERACK      "verack"
@@ -109,13 +108,11 @@ typedef enum {
 typedef struct {
     UInt128 address; // IPv6 address of peer
     uint16_t port; // port number for peer connection
-    uint64_t services; // bitcoin network services supported by peer
     uint64_t timestamp; // timestamp reported by peer
     uint8_t flags; // scratch variable
     void *assetCallbackInfo;
 } BRPeer;
 
-#define PEER_NONE ((BRPeer) { UINT128_ZERO, 0, 0, 0, 0 })
 
 // NOTE: Peer functions are not thread-safe
 
