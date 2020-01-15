@@ -27,131 +27,122 @@ add_library( # The name of the library.
              SHARED
 
              # Core files
-             src/main/jni/core/BRAddress.c
-             src/main/jni/core/BRAddress.h
-             src/main/jni/core/BRArray.h
-             src/main/jni/core/BRBase58.c
-             src/main/jni/core/BRBase58.h
-             src/main/jni/core/BRBIP44Sequence.c
-             src/main/jni/core/BRBIP44Sequence.h
-             src/main/jni/core/BRBIP38Key.c
-             src/main/jni/core/BRBIP38Key.h
-             src/main/jni/core/BRBIP39Mnemonic.c
-             src/main/jni/core/BRBIP39Mnemonic.h
-             src/main/jni/core/BRBIP39WordsEn.h
-             src/main/jni/core/BRBloomFilter.c
-             src/main/jni/core/BRBloomFilter.h
-             src/main/jni/core/BRChainParams.h
-             src/main/jni/core/BRCrypto.c
-             src/main/jni/core/BRCrypto.h
-             src/main/jni/core/BRInt.h
-             src/main/jni/core/BRKey.c
-             src/main/jni/core/BRKey.h
-             src/main/jni/core/BRMerkleBlock.c
-             src/main/jni/core/BRMerkleBlock.h
-             src/main/jni/core/BRPaymentProtocol.c
-             src/main/jni/core/BRPaymentProtocol.h
-             src/main/jni/core/BRPeer.c
-             src/main/jni/core/BRPeer.h
-             src/main/jni/core/BRPeerManager.c
-             src/main/jni/core/BRPeerManager.h
-             src/main/jni/core/BRSet.c
-             src/main/jni/core/BRSet.h
-             src/main/jni/core/BRTransaction.c
-             src/main/jni/core/BRTransaction.h
-             src/main/jni/core/BRWallet.c
-             src/main/jni/core/BRWallet.h
-             src/main/jni/core/BRAssets.c
-             src/main/jni/core/BRAssets.h
-             src/main/jni/core/BRScript.c
-             src/main/jni/core/BRScript.h
+             spv/core/BRAddress.c
+             spv/core/BRAddress.h
+             spv/core/BRArray.h
+             spv/core/BRBase58.c
+             spv/core/BRBase58.h
+             spv/core/BRBIP44Sequence.c
+             spv/core/BRBIP44Sequence.h
+             spv/core/BRBIP38Key.c
+             spv/core/BRBIP38Key.h
+             spv/core/BRBIP39Mnemonic.c
+             spv/core/BRBIP39Mnemonic.h
+             spv/core/BRBIP39WordsEn.h
+             spv/core/BRBloomFilter.c
+             spv/core/BRBloomFilter.h
+             spv/core/BRChainParams.h
+             spv/core/BRCrypto.c
+             spv/core/BRCrypto.h
+             spv/core/BRInt.h
+             spv/core/BRKey.c
+             spv/core/BRKey.h
+             spv/core/BRMerkleBlock.c
+             spv/core/BRMerkleBlock.h
+             spv/core/BRPaymentProtocol.c
+             spv/core/BRPaymentProtocol.h
+             spv/core/BRPeer.c
+             spv/core/BRPeer.h
+             spv/core/BRPeerManager.c
+             spv/core/BRPeerManager.h
+             spv/core/BRSet.c
+             spv/core/BRSet.h
+             spv/core/BRTransaction.c
+             spv/core/BRTransaction.h
+             spv/core/BRWallet.c
+             spv/core/BRWallet.h
+             spv/core/BRAssets.c
+             spv/core/BRAssets.h
+             spv/core/BRScript.c
+             spv/core/BRScript.h
+             spv/core/ChainParams.h
 
             # X16r files
-			src/main/jni/core/crypto/blake.c
-			src/main/jni/core/crypto/bmw.c
-			src/main/jni/core/crypto/cubehash.c
-			src/main/jni/core/crypto/echo.c
-			src/main/jni/core/crypto/groestl.c
-			src/main/jni/core/crypto/jh.c
-			src/main/jni/core/crypto/keccak.c
-			src/main/jni/core/crypto/luffa.c
-			src/main/jni/core/crypto/shavite.c
-			src/main/jni/core/crypto/simd.c
-			src/main/jni/core/crypto/skein.c
-			src/main/jni/core/crypto/sph_blake.h
-			src/main/jni/core/crypto/sph_bmw.h
-			src/main/jni/core/crypto/sph_cubehash.h
-			src/main/jni/core/crypto/sph_echo.h
-			src/main/jni/core/crypto/sph_fugue.c
-			src/main/jni/core/crypto/sph_fugue.h
-			src/main/jni/core/crypto/sph_groestl.h
-			src/main/jni/core/crypto/sph_hamsi.c
-			src/main/jni/core/crypto/sph_hamsi.h
-			src/main/jni/core/crypto/sph_hamsi_helper.c
-			src/main/jni/core/crypto/sph_jh.h
-			src/main/jni/core/crypto/sph_keccak.h
-			src/main/jni/core/crypto/sph_luffa.h
-			src/main/jni/core/crypto/sph_sha2.c
-			src/main/jni/core/crypto/sph_sha2.h
-			src/main/jni/core/crypto/sph_sha512.c
-			src/main/jni/core/crypto/sph_shabal.c
-			src/main/jni/core/crypto/sph_shabal.h
-			src/main/jni/core/crypto/sph_shavite.h
-			src/main/jni/core/crypto/sph_simd.h
-			src/main/jni/core/crypto/sph_skein.h
-			src/main/jni/core/crypto/sph_types.h
-			src/main/jni/core/crypto/sph_whirlpool.c
-			src/main/jni/core/crypto/sph_whirlpool.h
+			spv/core/crypto/blake.c
+			spv/core/crypto/bmw.c
+			spv/core/crypto/cubehash.c
+			spv/core/crypto/echo.c
+			spv/core/crypto/groestl.c
+			spv/core/crypto/jh.c
+			spv/core/crypto/keccak.c
+			spv/core/crypto/luffa.c
+			spv/core/crypto/shavite.c
+			spv/core/crypto/simd.c
+			spv/core/crypto/skein.c
+			spv/core/crypto/sph_blake.h
+			spv/core/crypto/sph_bmw.h
+			spv/core/crypto/sph_cubehash.h
+			spv/core/crypto/sph_echo.h
+			spv/core/crypto/sph_fugue.c
+			spv/core/crypto/sph_fugue.h
+			spv/core/crypto/sph_groestl.h
+			spv/core/crypto/sph_hamsi.c
+			spv/core/crypto/sph_hamsi.h
+			spv/core/crypto/sph_hamsi_helper.c
+			spv/core/crypto/sph_jh.h
+			spv/core/crypto/sph_keccak.h
+			spv/core/crypto/sph_luffa.h
+			spv/core/crypto/sph_sha2.c
+			spv/core/crypto/sph_sha2.h
+			spv/core/crypto/sph_sha512.c
+			spv/core/crypto/sph_shabal.c
+			spv/core/crypto/sph_shabal.h
+			spv/core/crypto/sph_shavite.h
+			spv/core/crypto/sph_simd.h
+			spv/core/crypto/sph_skein.h
+			spv/core/crypto/sph_types.h
+			spv/core/crypto/sph_whirlpool.c
+			spv/core/crypto/sph_whirlpool.h
 
              # Core JNI files
-             src/main/jni/BRCoreJni.h
-             src/main/jni/BRCoreJni.c
-             src/main/jni/com_ravencoin_core_BRCoreJniReference.c
-             src/main/jni/com_ravencoin_core_BRCoreJniReference.h
-             src/main/jni/com_ravencoin_core_BRCoreAddress.c
-             src/main/jni/com_ravencoin_core_BRCoreAddress.h
-             src/main/jni/com_ravencoin_core_BRCoreChainParams.c
-             src/main/jni/com_ravencoin_core_BRCoreChainParams.h
-             src/main/jni/com_ravencoin_core_BRCorePeer.c
-             src/main/jni/com_ravencoin_core_BRCorePeer.h
-             src/main/jni/com_ravencoin_core_BRCoreMasterPubKey.c
-             src/main/jni/com_ravencoin_core_BRCoreMasterPubKey.h
-             src/main/jni/com_ravencoin_core_BRCoreKey.h
-             src/main/jni/com_ravencoin_core_BRCoreKey.c
-             src/main/jni/com_ravencoin_core_BRCoreMerkleBlock.c
-             src/main/jni/com_ravencoin_core_BRCoreMerkleBlock.h
-             src/main/jni/com_ravencoin_core_BRCorePeerManager.c
-             src/main/jni/com_ravencoin_core_BRCorePeerManager.h
-             src/main/jni/com_ravencoin_core_BRCoreTransaction.c
-             src/main/jni/com_ravencoin_core_BRCoreTransaction.h
-             src/main/jni/com_ravencoin_core_BRCoreTransactionInput.c
-             src/main/jni/com_ravencoin_core_BRCoreTransactionInput.h
-             src/main/jni/com_ravencoin_core_BRCoreTransactionOutput.c
-             src/main/jni/com_ravencoin_core_BRCoreTransactionOutput.h
-             src/main/jni/com_ravencoin_core_BRCorePaymentProtocol.c
-             src/main/jni/com_ravencoin_core_BRCorePaymentProtocol.h
-             src/main/jni/com_ravencoin_core_BRCoreWallet.c
-             src/main/jni/com_ravencoin_core_BRCoreWallet.h
-             src/main/jni/com_ravencoin_core_BRCoreTransactionAsset.c
-             src/main/jni/com_ravencoin_core_BRCoreTransactionAsset.h
+             spv/BRCoreJni.h
+             spv/BRCoreJni.c
+             spv/com_ravencoin_core_BRCoreJniReference.c
+             spv/com_ravencoin_core_BRCoreJniReference.h
+             spv/com_ravencoin_core_BRCoreAddress.c
+             spv/com_ravencoin_core_BRCoreAddress.h
+             spv/com_ravencoin_core_BRCoreChainParams.c
+             spv/com_ravencoin_core_BRCoreChainParams.h
+             spv/com_ravencoin_core_BRCorePeer.c
+             spv/com_ravencoin_core_BRCorePeer.h
+             spv/com_ravencoin_core_BRCoreMasterPubKey.c
+             spv/com_ravencoin_core_BRCoreMasterPubKey.h
+             spv/com_ravencoin_core_BRCoreKey.h
+             spv/com_ravencoin_core_BRCoreKey.c
+             spv/com_ravencoin_core_BRCoreMerkleBlock.c
+             spv/com_ravencoin_core_BRCoreMerkleBlock.h
+             spv/com_ravencoin_core_BRCorePeerManager.c
+             spv/com_ravencoin_core_BRCorePeerManager.h
+             spv/com_ravencoin_core_BRCoreTransaction.c
+             spv/com_ravencoin_core_BRCoreTransaction.h
+             spv/com_ravencoin_core_BRCoreTransactionInput.c
+             spv/com_ravencoin_core_BRCoreTransactionInput.h
+             spv/com_ravencoin_core_BRCoreTransactionOutput.c
+             spv/com_ravencoin_core_BRCoreTransactionOutput.h
+             spv/com_ravencoin_core_BRCorePaymentProtocol.c
+             spv/com_ravencoin_core_BRCorePaymentProtocol.h
+             spv/com_ravencoin_core_BRCoreWallet.c
+             spv/com_ravencoin_core_BRCoreWallet.h
+             spv/com_ravencoin_core_BRCoreTransactionAsset.c
+             spv/com_ravencoin_core_BRCoreTransactionAsset.h
+ 		)
 
-             # Bech32 files
-             #src/main/jni/core/BRBech32.c
-             #src/main/jni/core/BRBech32.h
-
-             )
-
-include_directories(src/main/jni/)
-include_directories(src/main/jni/core/)
-include_directories(src/main/jni/core/secp256k1/include)
-include_directories(src/main/jni/core/secp256k1/src)
-include_directories(src/main/jni/core/secp256k1)
+include_directories(spv/)
+include_directories(spv/core/)
+include_directories(spv/core/secp256k1/include)
+include_directories(spv/core/secp256k1/src)
+include_directories(spv/core/secp256k1)
 include_directories(/System/Library/Frameworks/JavaVM.framework/Headers)
-
-include_directories(src/main/secp/secp256k1/include/)
-include_directories(src/main/secp/secp256k1/src/)
-include_directories(src/main/secp/secp256k1/)
-include_directories(src/main/secp/)
 
 # add lib dependencies
 target_link_libraries(
