@@ -1,7 +1,0 @@
-
-CMakeLists.txt
-cmake-build-debug/*
-cmake-build-debug/CMakeFiles/*
-cmake-build-debug/.DS_Store
-Makefile
-.idea/*
