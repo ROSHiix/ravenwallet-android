@@ -1,3 +1,11 @@
+
+# Bitsy 
+
+Fork of Bitcoin-Core/secp256k1 library at commit: b8c26a39903de7bf1d789232e030319116b011ac
+
+https://github.com/bitcoin-core/secp256k1/tree/b8c26a39903de7bf1d789232e030319116b011ac
+
+
 libsecp256k1
 ============
 

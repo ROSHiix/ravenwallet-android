@@ -1,5 +1,5 @@
 //  Created by Ed Gamble on 1/23/2018
-//  Copyright (c) 2018 ravenwallet LLC.
+//  Copyright (c) 2018 ravencoin LLC.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,9 @@
 //  THE SOFTWARE.
 
 #include <stdlib.h>
-#include <malloc.h>
 #include <string.h>
-#include "BRCoreJni.h"
-#include "BRChainParams.h"
+#include "CoreJni.h"
+#include "ChainParams.h"
 #include "com_ravencoin_core_BRCoreChainParams.h"
 
 /*
@@ -31,7 +30,7 @@
  * Method:    getJniMagicNumber
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_com_ravenwallet_core_BRCoreChainParams_getJniMagicNumber
+JNIEXPORT jint JNICALL Java_com_ravencoin_core_BRCoreChainParams_getJniMagicNumber
         (JNIEnv *env, jobject thisObject)
 {
     BRChainParams *params = (BRChainParams *) getJNIReference(env, thisObject);
@@ -43,7 +42,7 @@ JNIEXPORT jint JNICALL Java_com_ravenwallet_core_BRCoreChainParams_getJniMagicNu
  * Method:    createJniMainnetChainParams
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_com_ravenwallet_core_BRCoreChainParams_createJniMainnetChainParams
+JNIEXPORT jlong JNICALL Java_com_ravencoin_core_BRCoreChainParams_createJniMainnetChainParams
         (JNIEnv *env, jclass thisClass) {
     BRChainParams *result = (BRChainParams *) calloc (1, sizeof (BRChainParams));
     memcpy (result, &BRMainNetParams, sizeof (BRChainParams));
@@ -55,7 +54,7 @@ JNIEXPORT jlong JNICALL Java_com_ravenwallet_core_BRCoreChainParams_createJniMai
  * Method:    createJniTestnetChainParams
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_com_ravenwallet_core_BRCoreChainParams_createJniTestnetChainParams
+JNIEXPORT jlong JNICALL Java_com_ravencoin_core_BRCoreChainParams_createJniTestnetChainParams
         (JNIEnv *env, jclass thisClass) {
     BRChainParams *result = (BRChainParams *) calloc (1, sizeof (BRChainParams));
     memcpy (result, &BRTestNetParams, sizeof (BRChainParams));

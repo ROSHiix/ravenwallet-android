@@ -42,7 +42,7 @@ d#include <Foundation/Foundation.h>
 #define _peer_log(...) NSLog(__VA_ARGS__)
 #elif defined(__ANDROID__)
 #include <android/log.h>
-#define _peer_log(...) __android_log_print(ANDROID_LOG_INFO, "raven", __VA_ARGS__)
+#define _peer_log(...) __android_log_print(ANDROID_LOG_INFO, "bread", __VA_ARGS__)
 #else
 #include <stdio.h>
 #define _peer_log(...) printf(__VA_ARGS__)
@@ -63,9 +63,9 @@ extern "C" {
 #define SERVICES_NODE_NETWORK 0x01 // services value indicating a node carries full blocks, not just headers
 #define SERVICES_NODE_BLOOM   0x04 // BIP111: https://github.com/bitcoin/bips/blob/master/bip-0111.mediawiki
 
-#define VERSION "0.1.0"
+#define VERSION "0.1.1"
 #define USER_AGENT "/rvnwallet:" VERSION "/"
-        
+
 // explanation of message types at: https://en.bitcoin.it/wiki/Protocol_specification
 #define MSG_VERSION     "version"
 #define MSG_VERACK      "verack"
@@ -109,13 +109,13 @@ typedef enum {
 typedef struct {
     UInt128 address; // IPv6 address of peer
     uint16_t port; // port number for peer connection
-    uint64_t services; // network services supported by peer
+    uint64_t services; // bitcoin network services supported by peer
     uint64_t timestamp; // timestamp reported by peer
     uint8_t flags; // scratch variable
     void *assetCallbackInfo;
 } BRPeer;
 
-#define PEER_NONE ((const BRPeer) { UINT128_ZERO, 0, 0, 0, 0 })
+#define PEER_NONE ((BRPeer) { UINT128_ZERO, 0, 0, 0, 0 })
 
 // NOTE: Peer functions are not thread-safe
 

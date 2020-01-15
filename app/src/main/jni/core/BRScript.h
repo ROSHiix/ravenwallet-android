@@ -9,7 +9,7 @@
 
 //#include "crypto/common.h"
 //#include "assets/Assets.h"
-#include "BRTransaction.h"
+
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>
@@ -22,8 +22,6 @@
 #define RVN_Q 113
 #define RVN_T 116
 #define RVN_O 111
-
-#define OWNERSHIP_TRANSFER_TAG 0x21
 
 /** Script opcodes */
 enum OPCODETYPE
@@ -186,12 +184,5 @@ bool IsScriptTransferAsset(const uint8_t *script, size_t scriptLen);
 
 
 bool IsScriptAsset(const uint8_t *script, size_t scriptLen);
-
-bool IsAssetNameRootAsset(const BRAsset *asst);
-
-bool IsAssetNameSubAsset(const BRAsset *asst);
-
-bool IsAssetNameUniqueAsset(const BRAsset *asst);
-
 
 #endif // SCRIPT_H

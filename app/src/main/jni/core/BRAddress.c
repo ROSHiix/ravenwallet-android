@@ -218,7 +218,7 @@ size_t BRScriptPushData(uint8_t *script, size_t scriptLen, const uint8_t *data, 
 // we are unable to correctly sign later, then the entire wallet balance after that point would become stuck with the
 // current coin selection code
 
-// writes the ravenwallet address for a scriptPubKey to addr
+// writes the ravencoin address for a scriptPubKey to addr
 // returns the number of bytes written, or addrLen needed if addr is NULL
 size_t BRAddressFromScriptPubKey(char *addr, size_t addrLen, const uint8_t *script, size_t scriptLen)
 {
@@ -236,15 +236,14 @@ size_t BRAddressFromScriptPubKey(char *addr, size_t addrLen, const uint8_t *scri
     data[0] = RAVENCOIN_PUBKEY_ADDRESS_REGTEST;
 #endif
     
-    // TODO count doesn't trigger/ for regular tx count =5 for assets tx =8
-    if ((count == 5 || count == 8) && *elems[0] == OP_DUP && *elems[1] == OP_HASH160 && *elems[2] == 20 && *elems[3] == OP_EQUALVERIFY
+    // TODO count doesn't trigger/ for regular tx =5 for assets tx =8 (remove and fix later)
+    if (/*count == 5 && */*elems[0] == OP_DUP && *elems[1] == OP_HASH160 && *elems[2] == 20 && *elems[3] == OP_EQUALVERIFY
         && *elems[4] == OP_CHECKSIG) {
         // pay-to-pubkey-hash scriptPubKey
         d = BRScriptData(elems[2], &l);
         if (l != 20) d = NULL;
         if (d) memcpy(&data[1], d, 20);
     }
-#warning TODO: doesn't support PSH count for assets tx will be >3
     else if (count == 3 && *elems[0] == OP_HASH160 && *elems[1] == 20 && *elems[2] == OP_EQUAL) {
         // pay-to-script-hash scriptPubKey
         data[0] = RAVENCOIN_SCRIPT_ADDRESS;
@@ -267,7 +266,7 @@ size_t BRAddressFromScriptPubKey(char *addr, size_t addrLen, const uint8_t *scri
     return (d) ? BRBase58CheckEncode(addr, addrLen, data, sizeof(data)) : 0;
 }
 
-// writes the ravenwallet address for a scriptSig to addr
+// writes the ravencoin address for a scriptSig to addr
 // returns the number of bytes written, or addrLen needed if addr is NULL
 size_t BRAddressFromScriptSig(char *addr, size_t addrLen, const uint8_t *script, size_t scriptLen)
 {
@@ -355,7 +354,7 @@ size_t BRAddressScriptPubKey(uint8_t *script, size_t scriptLen, const char *addr
     return r;
 }
 
-// returns true if addr is a valid ravenwallet address
+// returns true if addr is a valid ravencoin address
 int BRAddressIsValid(const char *addr)
 {
     uint8_t data[21];

@@ -58,8 +58,8 @@
 #define MAX_MSG_LENGTH     0x02000000
 #define MAX_GETDATA_HASHES 50000
 #define ENABLED_SERVICES   0ULL  // we don't provide full blocks to remote nodes
-#define PROTOCOL_VERSION   70020
-#define MIN_PROTO_VERSION  70020 // peers earlier than this protocol version not supported (need v0.9 txFee relay rules)
+#define PROTOCOL_VERSION   70026
+#define MIN_PROTO_VERSION  70002 // peers earlier than this protocol version not supported (need v0.9 txFee relay rules)
 #define LOCAL_HOST         ((UInt128) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff, 0x7f, 0x00, 0x00, 0x01 })
 #define CONNECT_TIMEOUT    3.0
 #define MESSAGE_TIMEOUT    10.0
@@ -279,46 +279,7 @@ static int _PeerAcceptVerackMessage(BRPeer *peer, const uint8_t *msg, size_t msg
 
     return r;
 }
-/**
- * Request -> getassetdata
- * HEADER: 43524f576765746173736574646174611d0000004a54c291
- * DATA: 020c41535345545f4a4552454d590e4241445f41535345545f4e414d45
- * Data Breakdown:
- * 02 - Varint size of the vector
- * 0c - Size of element = e.g. 12 Bytes
- * 41535345545f4a4552454d59 - Name of asset = e.g. "ASSET_JEREMY"
- * 0e - Size of element = e.g. 14 Bytes
- * 4241445f41535345545f4e414d45 - Name of asset = e.g. "BAD_ASSET_NAME"
- * --------------------------------------------------------------------
- *
- * First Response -> assetdata
- * HEADER: 43524f576173736574646174610000001d000000200a58aa
- * DATA: 0c41535345545f4a4552454d5900e1f50500000000 00010000f5010000
- * Data Breakdown:
- * 0c - Size of name = e.g. 12 Bytes
- * 41535345545f4a4552454d59 - Name of asset = e.g. "ASSET_JEREMY"
- * 00e1f50500000000 - Amount = e.g. 100000000
- * 00 - Units = e.g. 0
- * 01 - Reissuable = e.g. 1
- *
- * 00 - hasIPFS = e.g. 0
- * 00 - Size of IPFS hash
- *
- * 01 - hasIPFS = e.g. 1
- * 22 - Size of IPFS hash - 34 Bytes
- * 1220da203afd5eda1f45deeafb70ae9d5c15907cd32ec2cd747c641fc1e9ab55b8e8 - IPFS hash data
 
- * f5010000 - Block height
- *
- *
- * Second Response -> asstnotfound
- * HEADER: 43524f57617373746e6f74666f756e6410000000571db430
- * DATA: 010e4241445f41535345545f4e414d45
- * Data Breakdown:
- * 01 - Varint size of the vector
- * Oe - Size of element = e.g. 14 Bytes
- * 4241445f41535345545f4e414d45 - Name of asset = e.g. "BAD_ASSET_NAME"
- */
 static int _PeerAcceptAssetMessage(BRPeer *peer, const uint8_t *msg, size_t msgLen) {
     size_t off = 0, count = (size_t) BRVarInt(msg, msgLen, &off), sLen = 0;
     int r = 1;
@@ -330,55 +291,47 @@ static int _PeerAcceptAssetMessage(BRPeer *peer, const uint8_t *msg, size_t msgL
         peer_log(peer, "dropping assets message, %zu is too many assets, max is 512", count);
     } else {
         peer_log(peer, "got asset with %zu data", count);
-        
+
         BRAsset *asset = NewAsset();
 
         asset->nameLen = count;
-        
         asset->name = malloc(count + 1);
         memcpy(asset->name, msg + off, count);
         off += count;
         *(asset->name + count) = '\0';
         assert(*(asset->name + count) == '\0');
         
-        //TODO: test
-        if(strcmp(asset->name, "_NF") == 0) {
-            peer_log(peer, "Asset not found");
-            ((BRPeerContext *) peer)->receiveAssetData(peer->assetCallbackInfo, NULL);
-            return r;
-        }
-        
         asset->amount = (off + sizeof(uint64_t) <= msgLen) ? UInt64GetLE(&msg[off]) : 0;
         off += sizeof(uint64_t);
         
-        asset->unit = msg[off];
-        off += sizeof(uint8_t);
-
-        asset->reissuable = msg[off];
-        off += sizeof(uint8_t);
-
-        asset->hasIPFS = msg[off];
-        off += sizeof(uint8_t);
-
+        asset->unit = BRVarInt(&msg[off], (off <= (msgLen) ? (msgLen) - off : 0), &sLen);
+        off += sLen;
+        
+        asset->reissuable = BRVarInt(&msg[off], (off <= (msgLen) ? (msgLen) - off : 0), &sLen);
+        off += sLen;
+        
+        asset->hasIPFS = BRVarInt(&msg[off], (off <= (msgLen) ? (msgLen) - off : 0), &sLen);
+        off += sLen;
+        
         size_t IPFS_length = (size_t) BRVarInt(&msg[off], (off <= (msgLen) ? (msgLen) - off : 0),
                                                &sLen);
         off += sLen;
         
         // Check the end of the script
         if (asset->hasIPFS != 0 || IPFS_length != 0) {
+        
+        uint8_t IPFS_hash[IPFS_length];
+        
+        if (off <= msgLen + IPFS_length) {
+            memcpy(&IPFS_hash, msg + off, IPFS_length);
+            off += IPFS_length;
+            printf("\nIPFS hash: %s", IPFS_hash);
             
-            uint8_t IPFS_hash[IPFS_length];
-            
-            if (off <= msgLen + IPFS_length) {
-                memcpy(&IPFS_hash, msg + off, IPFS_length);
-                off += IPFS_length;
-                EncodeIPFS(asset->IPFSHash, 47, IPFS_hash, IPFS_length);
-            }
+            EncodeIPFS(asset->IPFSHash, 47, IPFS_hash, IPFS_length);
+        }
         }
         
-        // TODO: parse Block Height, if hasn't IPFS make sure to ignore the 00 size of IPFH Hash.
-        
-            ((BRPeerContext *) peer)->receiveAssetData(peer->assetCallbackInfo, asset);
+        ((BRPeerContext *) peer)->receiveAssetData(peer->assetCallbackInfo, asset);
     }
     
     return r;
@@ -587,11 +540,19 @@ static int _PeerAcceptTxMessage(BRPeer *peer, const uint8_t *msg, size_t msgLen)
             }
         }
 
-        if(tx->asset) {
-            peer_log(peer, "got tx with %s Asset: %lld x %ld[%s]", GetAssetScriptType(tx->asset->type), tx->asset->amount / COIN,
-                    tx->asset->nameLen, tx->asset->name);
+        // Console Debug Display
+#ifdef DEBUG
+        peer_log(peer, "got tx with %ld Asset Output.", tx->asstCount);
+        BRAsset *asset;
+        for (int i = 0; i < tx->asstCount; i++) {
+
+            asset = &tx->asset[i];
+            peer_log(peer, "got tx with %s Asset: %lld x %ld[%s]", GetAssetType(asset->type),
+                         asset->amount / COIN,
+                         asset->nameLen, asset->name);
         }
     }
+#endif
 
     return r;
 }
@@ -618,8 +579,13 @@ static int _PeerAcceptHeadersMessage(BRPeer *peer, const uint8_t *msg, size_t ms
             time_t now = time(NULL);
             UInt256 locators[2];
 
-            X16R(&locators[0], &msg[off + 81 * (count - 1)], 80);
-            X16R(&locators[1], &msg[off], 80);
+            if(timestamp < X16RV2ActivationTime) {
+                X16R(&locators[0], &msg[off + 81 * (count - 1)], 80);
+                X16R(&locators[1], &msg[off], 80);
+            } else {
+                X16Rv2(&locators[0], &msg[off + 81 * (count - 1)], 80);
+                X16Rv2(&locators[1], &msg[off], 80);
+            }
 
             if (timestamp > 0 && timestamp + 7 * 24 * 60 * 60 + BLOCK_MAX_TIME_DRIFT >= ctx->earliestKeyTime) {
                 // request blocks for the remainder of the chain
@@ -629,7 +595,11 @@ static int _PeerAcceptHeadersMessage(BRPeer *peer, const uint8_t *msg, size_t ms
                     timestamp = (++last < count) ? UInt32GetLE(&msg[off + 81 * last + 68]) : 0;
                 }
 
-                X16R(&locators[0], &msg[off + 81 * (last - 1)], 80);
+                if(timestamp < X16RV2ActivationTime)
+                    X16R(&locators[0], &msg[off + 81 * (last - 1)], 80);
+                else
+                    X16Rv2(&locators[0], &msg[off + 81 * (last - 1)], 80);
+
                 BRPeerSendGetblocks(peer, locators, 2, UINT256_ZERO);
             } else BRPeerSendGetheaders(peer, locators, 2, UINT256_ZERO);
 
@@ -968,10 +938,12 @@ static int _PeerAcceptMessage(BRPeer *peer, const uint8_t *msg, size_t msgLen, c
     else if (strncmp(MSG_PING, type, 12) == 0) r = _PeerAcceptPingMessage(peer, msg, msgLen);
     else if (strncmp(MSG_PONG, type, 12) == 0) r = _PeerAcceptPongMessage(peer, msg, msgLen);
     else if (strncmp(MSG_MERKLEBLOCK, type, 12) == 0) r = _PeerAcceptMerkleblockMessage(peer, msg, msgLen);
-    else if (strncmp(MSG_REJECT, type, 12) == 0)r = _PeerAcceptRejectMessage(peer, msg, msgLen);
+    else if (strncmp(MSG_REJECT, type, 12) == 0) r = _PeerAcceptRejectMessage(peer, msg, msgLen);
     else if (strncmp(MSG_FEEFILTER, type, 12) == 0) r = _PeerAcceptFeeFilterMessage(peer, msg, msgLen);
-    else if (strncmp(MSG_ASSETDATA, type, 12) == 0) r = _PeerAcceptAssetMessage(peer, msg, msgLen);
-//    else if (strncmp(MSG_ASSETNOTFOUND, type, 12) == 0) r = _PeerAssetNotFoundMessage(peer, msg, msgLen);
+    else if (strncmp(MSG_ASSETDATA, type, 12) == 0)
+        r = _PeerAcceptAssetMessage(peer, msg, msgLen);
+    else if (strncmp(MSG_ASSETNOTFOUND, type, 12) == 0)
+        r = _PeerAssetNotFoundMessage(peer, msg, msgLen);
     else
         peer_log(peer, "dropping %s, length %zu, not implemented", type, msgLen);
 
@@ -1379,7 +1351,7 @@ void BRPeerSendMessage(BRPeer *peer, const uint8_t *msg, size_t msgLen, const ch
         memcpy(&buf[off], hash, sizeof(uint32_t));
         off += sizeof(uint32_t);
         memcpy(&buf[off], msg, msgLen);
-        peer_log(peer, "synsending %s", type);
+        peer_log(peer, "sending %s", type);
         msgLen = 0;
         socket = ctx->socket;
         if (socket < 0) error = ENOTCONN;

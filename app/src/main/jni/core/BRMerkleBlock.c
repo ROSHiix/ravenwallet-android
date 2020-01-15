@@ -140,8 +140,10 @@ BRMerkleBlock *BRMerkleBlockParse(const uint8_t *buf, size_t bufLen) {
             if (block->flags) memcpy(block->flags, &buf[off], len);
         }
 
-/*SHA256_2(&block->blockHash, buf, 80);*/
-        X16R(&block->blockHash, buf, 80);
+        if(block->timestamp < X16RV2ActivationTime)
+            X16R(&block->blockHash, buf, 80);
+        else
+            X16Rv2(&block->blockHash, buf, 80);
     }
 
     return block;
@@ -344,15 +346,13 @@ int BRMerkleBlockVerifyDifficulty(const BRMerkleBlock *block, const BRMerkleBloc
     // TODO: implement regtest difficulty rule check
     return r; // don't worry about difficulty on regtest for now
 #endif
-return 1;
                 if (block->height == 338778) r = block->target == 0x1b07cf3a ? 1 : 0;
             } else {
                 r = (abs(diff) < 2) ? 1 : 0;
             }
             pastCount++;
         }
-    } else return 1;
-
+    }
     return r;
 }
 

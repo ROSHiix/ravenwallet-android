@@ -16,7 +16,7 @@
 //
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
 //  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
@@ -42,11 +42,18 @@ extern "C" {
 #define DGW_PAST_BLOCKS                     180
 
 #ifdef TESTNET
-#define DGW_START_BLOCK         6048
+#define DGW_START_BLOCK             0
+#define X16RV2_START_BLOCK          0 // change once we have a value
+#define X16RV2ActivationTime        1567533600
 #elif REGTEST
-#define DGW_START_BLOCK         0
+#define DGW_START_BLOCK             0
+#define X16RV2_START_BLOCK          0
+#define X16RV2ActivationTime        0
+
 #else
-#define DGW_START_BLOCK         338778
+#define DGW_START_BLOCK             338778
+#define X16RV2_START_BLOCK          6048
+#define X16RV2ActivationTime        1569945600 //Tue Oct 01 2019 16:00:00 UTC
 #endif
 
 typedef struct {
@@ -66,7 +73,7 @@ typedef struct {
 } BRMerkleBlock;
 
 #define BR_MERKLE_BLOCK_NONE\
-    ((const BRMerkleBlock) { UINT256_ZERO, 0, UINT256_ZERO, UINT256_ZERO, 0, 0, 0, 0, NULL, 0, NULL, 0, 0 })
+    ((BRMerkleBlock) { UINT256_ZERO, 0, UINT256_ZERO, UINT256_ZERO, 0, 0, 0, 0, NULL, 0, NULL, 0, 0 })
 
 // returns a newly allocated merkle block struct that must be freed by calling MerkleBlockFree()
 BRMerkleBlock *BRMerkleBlockNew(void);

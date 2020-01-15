@@ -37,6 +37,7 @@
 #include <pthread.h>
 
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -50,15 +51,16 @@ typedef struct {
     uint32_t n;
 } UTXO;
 
-inline static size_t BRUTXOHash(const void *utxo) {
+inline static size_t BRUTXOHash(const void *utxo)
+{
     // (hash xor n)*FNV_PRIME
-    return (size_t) ((((const UTXO *) utxo)->hash.u32[0] ^ ((const UTXO *) utxo)->n) * 0x01000193);
+    return (size_t)((((const UTXO *)utxo)->hash.u32[0] ^ ((const UTXO *)utxo)->n)*0x01000193);
 }
 
-inline static int BRUTXOEq(const void *utxo, const void *otherUtxo) {
-    return (utxo == otherUtxo ||
-            (UInt256Eq(((const UTXO *) utxo)->hash, ((const UTXO *) otherUtxo)->hash) &&
-             ((const UTXO *) utxo)->n == ((const UTXO *) otherUtxo)->n));
+inline static int BRUTXOEq(const void *utxo, const void *otherUtxo)
+{
+    return (utxo == otherUtxo || (UInt256Eq(((const UTXO *)utxo)->hash, ((const UTXO *)otherUtxo)->hash) &&
+                                  ((const UTXO *)utxo)->n == ((const UTXO *)otherUtxo)->n));
 }
 
 typedef struct BRWalletStructure BRWallet;
@@ -76,11 +78,9 @@ BRWallet *BRWalletNew(BRTransaction **transactions, size_t txCount, BRMasterPubK
 void BRWalletSetCallbacks(BRWallet *wallet, void *info,
                           void (*balanceChanged)(void *info, uint64_t balance),
                           void (*txAdded)(void *info, BRTransaction *tx),
-                          void (*txUpdated)(void *info, const UInt256 txHashes[], size_t txCount,
-                                            uint32_t blockHeight,
+                          void (*txUpdated)(void *info, const UInt256 txHashes[], size_t txCount, uint32_t blockHeight,
                                             uint32_t timestamp),
-                          void (*txDeleted)(void *info, UInt256 txHash, int notifyUser,
-                                            int recommendRescan));
+                          void (*txDeleted)(void *info, UInt256 txHash, int notifyUser, int recommendRescan));
 
 // wallets are composed of chains of addresses
 // each chain is traversed until a gap of a number of addresses is found that haven't been used in any transactions
@@ -92,8 +92,6 @@ size_t BRWalletUnusedAddrs(BRWallet *wallet, BRAddress *addrs, uint32_t gapLimit
 
 // returns the first unused external address
 BRAddress BRWalletReceiveAddress(BRWallet *wallet);
-
-size_t BRWalletUsedAddresses(BRWallet *wallet, BRAddress *addrs);
 
 // writes all addresses previously genereated with WalletUnusedAddrs() to addrs
 // returns the number addresses written, or total number available if addrs is NULL
@@ -128,77 +126,31 @@ size_t BRWalletUTXOs(BRWallet *wallet, UTXO *utxos, size_t utxosCount);
 
 // fee-per-kb of transaction size to use when creating a transaction
 uint64_t BRWalletFeePerKb(BRWallet *wallet);
-
 void BRWalletSetFeePerKb(BRWallet *wallet, uint64_t feePerKb);
 
 // returns an unsigned transaction that sends the specified amount from the wallet to the given address
 // result must be freed using TransactionFree()
 BRTransaction *BRWalletCreateTransaction(BRWallet *wallet, uint64_t amount, const char *addr);
+    
+BRTransaction *BRWalletCreateTxForRootAssetCreation(BRWallet *wallet, uint64_t amount, const char *addr, BRAsset *asset);
 
-//
-//
-// returns an unsigned transaction that sends the specified amount from the wallet to the given address
-// result must be freed by calling TransactionFree()
-BRTransaction *
-BRWalletCreateTxForRootAssetCreation(BRWallet *wallet, uint64_t amount, const char *addr,
-                                     BRAsset *asst);
+BRTransaction *BRWalletCreateTxForRootAssetTransfer(BRWallet *wallet, uint64_t amount, const char *addr, BRAsset *asset);
 
-//
-//
-// returns an unsigned transaction that sends the specified amount from the wallet to the given address
-// result must be freed by calling TransactionFree()
-BRTransaction *
-BRWalletCreateTxForSubAssetCreation(BRWallet *wallet, uint64_t amount, const char *addr,
-                                    BRAsset *asst, BRAsset *rootAsst);
-
-//
-//
-// returns an unsigned transaction that sends the specified amount from the wallet to the given address
-// result must be freed by calling TransactionFree()
-BRTransaction *
-BRWalletCreateTxForUniqueAssetCreation(BRWallet *wallet, uint64_t amount, const char *addr,
-                                       BRAsset *asst, BRAsset *rootAsst);
-
-//
-//
-// returns an unsigned transaction that sends the specified amount from the wallet to the given address
-// result must be freed by calling TransactionFree()
-BRTransaction *BRWalletCreateTxForAssetsReissue(BRWallet *wallet, uint64_t amount, const char *addr,
-                                                BRAsset *asst);
-
-//
-//
-// returns an unsigned transaction that sends the specified amount from the wallet to the given address
-// result must be freed by calling TransactionFree()
-BRTransaction *
-BRWalletCreateTxForRootAssetTransfer(BRWallet *wallet, uint64_t amount, const char *addr,
-                                     BRAsset *asst);
-
-//
-//
-// returns an unsigned transaction that sends the specified amount from the wallet to the given address
-// result must be freed by calling TransactionFree()
-
-BRTransaction *
-BRWalletCreateTxForRootAssetTransferOwnership(BRWallet *wallet, uint64_t amount, const char *addr,
-                                              BRAsset *asst);
-
-//
-//
-// returns an unsigned transaction that sends the specified amount from the wallet to the given address
-// result must be freed by calling TransactionFree()
+BRTransaction *BRWalletCreateTxForRootAssetTransferOwnership(BRWallet *wallet, uint64_t amount, const char *addr, BRAsset *asset);
 BRTransaction *BRWalletBurnRootAsset(BRWallet *wallet, BRAsset *asset);
 
+    
 // returns an unsigned transaction that satisifes the given transaction outputs
 // result must be freed using TransactionFree()
-BRTransaction *
-BRWalletCreateTxForOutputs(BRWallet *wallet, const BRTxOutput *outputs, size_t outCount);
+//BRTransaction *BRWalletCreateTxForOutputs(BRWallet *wallet, const BRTxOutput *outputs, size_t outCount);
+BRTransaction *BRWalletCreateTxForOutputs(BRWallet *wallet, const BRTxOutput *outputs, size_t outCount, BRAsset *asset);
+
 
 // signs any inputs in tx that can be signed using private keys from the wallet
 // forkId is 0 for bitcoin, 0x40 for b-cash
 // seed is the master private key (wallet seed) corresponding to the master public key given when the wallet was created
 // returns true if all inputs were signed, or false if there was an error or not all inputs were able to be signed
-int BRWalletSignTransaction(BRWallet *wallet, BRTransaction *tx, const void *seed, size_t seedLen);
+int BRWalletSignTransaction(BRWallet *wallet, BRTransaction *tx, int forkId, const void *seed, size_t seedLen);
 
 // true if the given transaction is associated with the wallet (even if it hasn't been registered)
 int BRWalletContainsTransaction(BRWallet *wallet, const BRTransaction *tx);
@@ -223,19 +175,14 @@ int BRWalletTransactionIsVerified(BRWallet *wallet, const BRTransaction *tx);
 
 // set the block heights and timestamps for the given transactions
 // use height TX_UNCONFIRMED and timestamp 0 to indicate a tx should remain marked as unverified (not 0-conf safe)
-void BRWalletUpdateTransactions(BRWallet *wallet, const UInt256 *txHashes, size_t txCount,
-                                uint32_t blockHeight,
+void BRWalletUpdateTransactions(BRWallet *wallet, const UInt256 *txHashes, size_t txCount, uint32_t blockHeight,
                                 uint32_t timestamp);
-
+    
 // marks all transactions confirmed after blockHeight as unconfirmed (useful for chain re-orgs)
 void BRWalletSetTxUnconfirmedAfter(BRWallet *wallet, uint32_t blockHeight);
 
 // returns the amount received by the wallet from the transaction (total outputs to change and/or receive addresses)
 uint64_t BRWalletAmountReceivedFromTx(BRWallet *wallet, const BRTransaction *tx);
-
-// writes the assets contained in the transaction and return the asset object count.
-size_t BRWalletAssetsReceivedFromTx(BRWallet *wallet, const BRTransaction *tx, BRAsset *asset,
-                                    size_t asstCount);
 
 // returns the amount sent from the wallet by the trasaction (total wallet outputs consumed, change and fee included)
 uint64_t BRWalletAmountSentByTx(BRWallet *wallet, const BRTransaction *tx);
@@ -266,14 +213,10 @@ void BRWalletFree(BRWallet *wallet);
 int64_t BRLocalAmount(int64_t amount, double price);
 
 // returns the given local currency amount in corbies
-// price is local currency units (i.e. pennies, pence) per ravenwallet
+// price is local currency units (i.e. pennies, pence) per ravencoin
 int64_t RavencoinAmount(int64_t localAmount, double price);
 
-// decompose a Creation asset or Reissue asset Transaction to burn + assets txs
-// returns the txscCount a transaction can be decomposed to when txDecomposed is NULL and txsCount is 0
-size_t
-BRTransactionDecompose(BRWallet *wallet, const BRTransaction *tx, BRTransaction *txDecomposed,
-                       size_t txsCount);
+bool AreAssetsDeployed();
 
 #ifdef __cplusplus
 }

@@ -1,8 +1,8 @@
 /*
- * ravenwallet
+ * ravencoin
  *
- * Created by Ed Gamble <ed@ravenwallet.com> on 1/30/18.
- * Copyright (c) 2018 ravenwallet LLC
+ * Created by Ed Gamble <ed@ravencoin.com> on 1/30/18.
+ * Copyright (c) 2018 ravencoin LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

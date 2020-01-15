@@ -25,7 +25,6 @@
 #include <arpa/inet.h>
 #include "BRAssets.h"
 #include "BRScript.h"
-#include "BRBIP44Sequence.h"
 
 
 #define SKIP_BIP38 1
@@ -944,7 +943,7 @@ int KeyTests() {
     if (!BRAddressEq(&addr, "ms8fwvXzrCoyatnGFRaLbepSqwGRxVJQF1"))
         r = 0, fprintf(stderr, "***FAILED*** %s: KeySetPrivKey() test 1\n", __func__);
 #else
-    if (!AddressEq(&addr, "RMWf5jvbFwD67TvBbaTLAFj9gpxjs9dV5F"))
+    if (!BRAddressEq(&addr, "RMWf5jvbFwD67TvBbaTLAFj9gpxjs9dV5F"))
         r = 0, fprintf(stderr, "***FAILED*** %s: KeySetPrivKey() test 1\n", __func__);
 #endif
 
@@ -953,43 +952,43 @@ int KeyTests() {
     if (!BRAddressEq(&addr, "mrhzp5mstA4Midx85EeCjuaUAAGANMFmRP"))
         r = 0, fprintf(stderr, "***FAILED*** %s: KeySetPrivKey() test 2\n", __func__);
 #else
-    if (!AddressEq(&addr, "1CC3X2gu58d6wXUWMffpuzN9JAfTUWu4Kj"))
+    if (!BRAddressEq(&addr, "1CC3X2gu58d6wXUWMffpuzN9JAfTUWu4Kj"))
         r = 0, fprintf(stderr, "***FAILED*** %s: KeySetPrivKey() test 2\n", __func__);
 #endif
 
 #if ! TESTNET
     // uncompressed private key
-    if (!PrivKeyIsValid("5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF"))
+    if (!BRPrivKeyIsValid("5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF"))
         r = 0, fprintf(stderr, "***FAILED*** %s: PrivKeyIsValid() test 3\n", __func__);
 
-    KeySetPrivKey(&key, "5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF");
-    KeyAddress(&key, addr.s, sizeof(addr));
+    BRKeySetPrivKey(&key, "5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF");
+    BRKeyAddress(&key, addr.s, sizeof(addr));
     printf("privKey:5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF = %s\n", addr.s);
-    if (!AddressEq(&addr, "1CC3X2gu58d6wXUWMffpuzN9JAfTUWu4Kj"))
+    if (!BRAddressEq(&addr, "1CC3X2gu58d6wXUWMffpuzN9JAfTUWu4Kj"))
         r = 0, fprintf(stderr, "***FAILED*** %s: KeySetPrivKey() test 3\n", __func__);
 
     // uncompressed private key export
-    char privKey1[KeyPrivKey(&key, NULL, 0)];
+    char privKey1[BRKeyPrivKey(&key, NULL, 0)];
     
-    KeyPrivKey(&key, privKey1, sizeof(privKey1));
+    BRKeyPrivKey(&key, privKey1, sizeof(privKey1));
     printf("privKey:%s\n", privKey1);
     if (strcmp(privKey1, "5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF") != 0)
         r = 0, fprintf(stderr, "***FAILED*** %s: KeyPrivKey() test 1\n", __func__);
     
     // compressed private key
-    if (!PrivKeyIsValid("KyvGbxRUoofdw3TNydWn2Z78dBHSy2odn1d3wXWN2o3SAtccFNJL"))
+    if (!BRPrivKeyIsValid("KyvGbxRUoofdw3TNydWn2Z78dBHSy2odn1d3wXWN2o3SAtccFNJL"))
         r = 0, fprintf(stderr, "***FAILED*** %s: PrivKeyIsValid() test 4\n", __func__);
 
-    KeySetPrivKey(&key, "KyvGbxRUoofdw3TNydWn2Z78dBHSy2odn1d3wXWN2o3SAtccFNJL");
-    KeyAddress(&key, addr.s, sizeof(addr));
+    BRKeySetPrivKey(&key, "KyvGbxRUoofdw3TNydWn2Z78dBHSy2odn1d3wXWN2o3SAtccFNJL");
+    BRKeyAddress(&key, addr.s, sizeof(addr));
     printf("privKey:KyvGbxRUoofdw3TNydWn2Z78dBHSy2odn1d3wXWN2o3SAtccFNJL = %s\n", addr.s);
-    if (!AddressEq(&addr, "1JMsC6fCtYWkTjPPdDrYX3we2aBrewuEM3"))
+    if (!BRAddressEq(&addr, "1JMsC6fCtYWkTjPPdDrYX3we2aBrewuEM3"))
         r = 0, fprintf(stderr, "***FAILED*** %s: KeySetPrivKey() test 4\n", __func__);
     
     // compressed private key export
-    char privKey2[KeyPrivKey(&key, NULL, 0)];
+    char privKey2[BRKeyPrivKey(&key, NULL, 0)];
     
-    KeyPrivKey(&key, privKey2, sizeof(privKey2));
+    BRKeyPrivKey(&key, privKey2, sizeof(privKey2));
     printf("privKey:%s\n", privKey2);
     if (strcmp(privKey2, "KyvGbxRUoofdw3TNydWn2Z78dBHSy2odn1d3wXWN2o3SAtccFNJL") != 0)
         r = 0, fprintf(stderr, "***FAILED*** %s: KeyPrivKey() test 2\n", __func__);
@@ -1464,7 +1463,7 @@ int BIP32SequenceTests() {
     if (! UInt256Eq(key.secret, u256_hex_decode("00136c1ad038f9a00871895322a487ed14f1cdc4d22ad351cfa1a0d235975dd7")))
         r = 0, fprintf(stderr, "***FAILED*** %s: BIP32PrivKey() test 2\n", __func__);
     
-    BRMasterPubKey mpk = BRBIP44MasterPubKey(&seed, sizeof(seed),175,0,0);
+    BRMasterPubKey mpk = BRBIP32MasterPubKey(&seed, sizeof(seed));
     
 //    printf("000102030405060708090a0b0c0d0e0f/0H fp:%08x chain:%s pubkey:%02x%s\n", be32(mpk.fingerPrint),
 //           u256_hex_encode(mpk.chainCode), mpk.pubKey[0], u256_hex_encode(*(UInt256 *)&mpk.pubKey[1]));
@@ -1624,7 +1623,7 @@ static void walletTxDeleted(void *info, UInt256 txHash, int notifyUser, int reco
 
 int WalletTests() {
     int r = 1;
-    BRMasterPubKey mpk = BRBIP44MasterPubKey("", 1,175,0,0);
+    BRMasterPubKey mpk = BRBIP32MasterPubKey("", 1);
     BRWallet *w = BRWalletNew(NULL, 0, mpk);
     UInt256 secret = u256_hex_decode("0000000000000000000000000000000000000000000000000000000000000001"),
             inHash = u256_hex_decode("0000000000000000000000000000000000000000000000000000000000000001");
@@ -2471,25 +2470,6 @@ int scriptValidationTest() {
     return fails;
 }
 
-int scriptCreationTest() {
-
-    int r = 0;
-
-    BRMasterPubKey mpk = BRBIP44MasterPubKey("", 1,175,0,0);
-    BRWallet *w = BRWalletNew(NULL, 0, mpk);
-    BRAddress addr = BRWalletReceiveAddress(w);
-    uint8_t outScript[BRAddressScriptPubKey(NULL, 0, addr.s)];
-    size_t outScriptLen = BRAddressScriptPubKey(outScript, sizeof(outScript), addr.s);
-
-    uint8_t name_helper[6] = "ROSHIIX";
-    BRAsset asset = { .type = TRANSFER, .amount = 109999, .name = name_helper, .nameLen = sizeof(name_helper), .unit = 0,
-                      .reissuable = 0, .hasIPFS = 0, .IPFSHash = NULL };
-
-    size_t off = ConstructTransferAssetScript(outScript, /*outScriptLen*/ 100, &asset);
-
-    return r;
-}
-
 int IpfsDecodingHash() {
 
     int r = 0;
@@ -2570,8 +2550,8 @@ int RunTests() {
     printf("\n");
     printf("%s\n", (scriptValidationTest()) ? "success" : (fail++, "***FAIL***"));
     printf("\n");
-    printf("%s\n", (scriptCreationTest()) ? "success" : (fail++, "***FAIL***"));
-    printf("\n");
+//    printf("%s\n", (scriptCreationTest()) ? "success" : (fail++, "***FAIL***"));
+//    printf("\n");
 //    printf("%s\n", (IpfsDecodingHash()) ? "success" : (fail++, "***FAIL***"));
 //    printf("\n");
 
@@ -2607,7 +2587,7 @@ int main(int argc, const char *argv[])  {
 
     BRBIP39DeriveKey(seed.u8, "throw detail divorce logic typical monkey armor infant purchase ocean lecture novel",
                      NULL);
-    mpk = BRBIP44MasterPubKey(&seed, sizeof(seed),175,0,0);
+    mpk = BRBIP32MasterPubKey(&seed, sizeof(seed));
 //    mpk = BIP44MasterPubKey(&seed, sizeof(seed), 0 | BIP32_HARD, 0 | BIP32_HARD);
 //    mpk = BIP44MasterPubKey(&seed, sizeof(seed), 0, 175);
 

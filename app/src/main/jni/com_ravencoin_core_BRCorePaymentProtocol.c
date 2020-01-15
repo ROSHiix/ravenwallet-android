@@ -1,5 +1,5 @@
 //  Created by Ed Gamble on 1/30/2018
-//  Copyright (c) 2018 ravenwallet LLC.
+//  Copyright (c) 2018 ravencoin LLC.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,8 @@
 
 #include <BRPaymentProtocol.h>
 #include <stdlib.h>
-#include <malloc.h>
 #include <assert.h>
-#include "BRCoreJni.h"
+#include "CoreJni.h"
 #include "com_ravencoin_core_BRCorePaymentProtocol.h"
 
 //
@@ -40,7 +39,7 @@ jmethodID transactionOutputConstructor;
 
 static void commonStaticInitialize(JNIEnv *env) {
     //
-    transactionClass = (*env)->FindClass(env, "com/ravenwallet/core/BRCoreTransaction");
+    transactionClass = (*env)->FindClass(env, "com/ravencoin/core/BRCoreTransaction");
     assert (NULL != transactionClass);
     transactionClass = (*env)->NewGlobalRef(env, transactionClass);
 
@@ -48,7 +47,7 @@ static void commonStaticInitialize(JNIEnv *env) {
     assert (NULL != transactionConstructor);
 
     //
-    transactionInputClass = (*env)->FindClass(env, "com/ravenwallet/core/BRCoreTransactionInput");
+    transactionInputClass = (*env)->FindClass(env, "com/ravencoin/core/BRCoreTransactionInput");
     assert (NULL != transactionInputClass);
     transactionInputClass = (*env)->NewGlobalRef(env, transactionInputClass);
 
@@ -56,7 +55,7 @@ static void commonStaticInitialize(JNIEnv *env) {
     assert (NULL != transactionInputConstructor);
 
     //
-    transactionOutputClass = (*env)->FindClass(env, "com/ravenwallet/core/BRCoreTransactionOutput");
+    transactionOutputClass = (*env)->FindClass(env, "com/ravencoin/core/BRCoreTransactionOutput");
     assert(NULL != transactionOutputClass);
     transactionOutputClass = (*env)->NewGlobalRef(env, transactionOutputClass);
 
@@ -76,7 +75,7 @@ static void commonStaticInitialize(JNIEnv *env) {
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getNetwork
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getNetwork
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -86,10 +85,10 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getNetwork
 /*
  * Class:     com_ravencoin_core_BRCorePaymentProtocolRequest
  * Method:    getOutputs
- * Signature: ()[Lcom/ravenwallet/core/BRCoreTransactionOutput;
+ * Signature: ()[Lcom/ravencoin/core/BRCoreTransactionOutput;
  */
 JNIEXPORT jobjectArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getOutputs
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getOutputs
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -118,7 +117,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getOutputs
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getTime
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getTime
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -131,7 +130,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getTime
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getExpires
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getExpires
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -144,7 +143,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getExpires
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getMemo
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getMemo
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -157,7 +156,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getMemo
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getPaymentURL
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getPaymentURL
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -170,7 +169,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getPaymentURL
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getMerchantData
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getMerchantData
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -188,7 +187,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getMerchantData
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getVersion
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getVersion
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -202,7 +201,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getVersion
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getPKIType
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getPKIType
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -216,7 +215,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getPKIType
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getPKIData
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getPKIData
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -234,7 +233,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getPKIData
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getSignature
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getSignature
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -250,7 +249,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getSignature
  * Method:    getDigest
  * Signature: ()[B
  */
-JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getDigest
+JNIEXPORT jbyteArray JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getDigest
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -269,7 +268,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolRequ
  * Method:    getCerts
  * Signature: ()[[B
  */
-JNIEXPORT jobjectArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_getCerts
+JNIEXPORT jobjectArray JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolRequest_getCerts
         (JNIEnv *env, jobject thisObject){
     BRPaymentProtocolRequest *request =
             (BRPaymentProtocolRequest *) getJNIReference(env, thisObject);
@@ -307,7 +306,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolRe
  * Signature: ([B)J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_createPaymentProtocolRequest
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_createPaymentProtocolRequest
         (JNIEnv *env, jclass thisClass, jbyteArray dataByteArray) {
 
     size_t dataLen = (*env)->GetArrayLength(env, dataByteArray);
@@ -321,7 +320,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_createPaymentProtocolRequ
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_serialize
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_serialize
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request = (BRPaymentProtocolRequest *) getJNIReference (env, thisObject);
 
@@ -341,7 +340,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_serialize
  * Signature: ()V
  */
 JNIEXPORT void JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_disposeNative
+Java_com_ravencoin_core_BRCorePaymentProtocolRequest_disposeNative
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolRequest *request = (BRPaymentProtocolRequest *) getJNIReference (env, thisObject);
     if (NULL != request) BRPaymentProtocolRequestFree(request);
@@ -352,7 +351,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_disposeNative
  * Method:    initializeNative
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_initializeNative
+JNIEXPORT void JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolRequest_initializeNative
         (JNIEnv *env, jclass thisClass) {
     commonStaticInitialize(env);
 }
@@ -367,7 +366,7 @@ JNIEXPORT void JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolRequest_in
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getMerchantData
+Java_com_ravencoin_core_BRCorePaymentProtocolPayment_getMerchantData
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolPayment *payment =
             (BRPaymentProtocolPayment *) getJNIReference (env, thisObject);
@@ -381,10 +380,10 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getMerchantData
 /*
  * Class:     com_ravencoin_core_BRCorePaymentProtocolPayment
  * Method:    getTransactions
- * Signature: ()[Lcom/ravenwallet/core/BRCoreTransaction;
+ * Signature: ()[Lcom/ravencoin/core/BRCoreTransaction;
  */
 JNIEXPORT jobjectArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getTransactions
+Java_com_ravencoin_core_BRCorePaymentProtocolPayment_getTransactions
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolPayment *payment =
             (BRPaymentProtocolPayment *) getJNIReference (env, thisObject);
@@ -408,10 +407,10 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getTransactions
 /*
  * Class:     com_ravencoin_core_BRCorePaymentProtocolPayment
  * Method:    getRefundTo
- * Signature: ()[Lcom/ravenwallet/core/BRCoreTransactionOutput;
+ * Signature: ()[Lcom/ravencoin/core/BRCoreTransactionOutput;
  */
 JNIEXPORT jobjectArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getRefundTo
+Java_com_ravencoin_core_BRCorePaymentProtocolPayment_getRefundTo
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolPayment *payment =
             (BRPaymentProtocolPayment *) getJNIReference (env, thisObject);
@@ -439,7 +438,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getRefundTo
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getMerchantMemo
+Java_com_ravencoin_core_BRCorePaymentProtocolPayment_getMerchantMemo
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolPayment *payment =
             (BRPaymentProtocolPayment *) getJNIReference (env, thisObject);
@@ -452,7 +451,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_getMerchantMemo
  * Signature: ([B)J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_createPaymentProtocolPayment
+Java_com_ravencoin_core_BRCorePaymentProtocolPayment_createPaymentProtocolPayment
         (JNIEnv *env, jclass thisClass, jbyteArray dataByteArray)  {
     size_t dataLen = (*env)->GetArrayLength(env, dataByteArray);
     const uint8_t *data = (uint8_t *) (*env)->GetByteArrayElements(env, dataByteArray, 0);
@@ -463,7 +462,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_createPaymentProtocolPaym
  * Method:    serialize
  * Signature: ()[B
  */
-JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_serialize
+JNIEXPORT jbyteArray JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolPayment_serialize
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolPayment *payment =
             (BRPaymentProtocolPayment *) getJNIReference(env, thisObject);
@@ -485,7 +484,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolPaym
  * Signature: ()V
  */
 JNIEXPORT void JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_disposeNative
+Java_com_ravencoin_core_BRCorePaymentProtocolPayment_disposeNative
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolPayment *payment =
             (BRPaymentProtocolPayment *) getJNIReference (env, thisObject);
@@ -497,7 +496,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_disposeNative
  * Method:    initializeNative
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_initializeNative
+JNIEXPORT void JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolPayment_initializeNative
         (JNIEnv *env, jclass thisClass) {
     commonStaticInitialize(env);
 }
@@ -513,7 +512,7 @@ JNIEXPORT void JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolPayment_in
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getCustomerMemo
+Java_com_ravencoin_core_BRCorePaymentProtocolACK_getCustomerMemo
         (JNIEnv *env, jobject thisObject)  {
     BRPaymentProtocolACK *ack = (BRPaymentProtocolACK *) getJNIReference (env, thisObject);
     return (*env)->NewStringUTF (env, ack->memo);
@@ -525,7 +524,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getCustomerMemo
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getMerchantData
+Java_com_ravencoin_core_BRCorePaymentProtocolACK_getMerchantData
         (JNIEnv *env, jobject thisObject)  {
     BRPaymentProtocolACK *ack = (BRPaymentProtocolACK *) getJNIReference (env, thisObject);
 
@@ -538,10 +537,10 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getMerchantData
 /*
  * Class:     com_ravencoin_core_BRCorePaymentProtocolACK
  * Method:    getTransactions
- * Signature: ()[Lcom/ravenwallet/core/BRCoreTransaction;
+ * Signature: ()[Lcom/ravencoin/core/BRCoreTransaction;
  */
 JNIEXPORT jobjectArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getTransactions
+Java_com_ravencoin_core_BRCorePaymentProtocolACK_getTransactions
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolACK *ack = (BRPaymentProtocolACK *) getJNIReference (env, thisObject);
     BRPaymentProtocolPayment *payment = ack->payment;
@@ -565,10 +564,10 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getTransactions
 /*
  * Class:     com_ravencoin_core_BRCorePaymentProtocolACK
  * Method:    getRefundTo
- * Signature: ()[Lcom/ravenwallet/core/BRCoreTransactionOutput;
+ * Signature: ()[Lcom/ravencoin/core/BRCoreTransactionOutput;
  */
 JNIEXPORT jobjectArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getRefundTo
+Java_com_ravencoin_core_BRCorePaymentProtocolACK_getRefundTo
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolACK *ack = (BRPaymentProtocolACK *) getJNIReference (env, thisObject);
     BRPaymentProtocolPayment *payment = ack->payment;
@@ -596,7 +595,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getRefundTo
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getMerchantMemo
+Java_com_ravencoin_core_BRCorePaymentProtocolACK_getMerchantMemo
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolACK *ack = (BRPaymentProtocolACK *) getJNIReference (env, thisObject);
     BRPaymentProtocolPayment *payment = ack->payment;
@@ -609,7 +608,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolACK_getMerchantMemo
  * Method:    createPaymentProtocolACK
  * Signature: ([B)J
  */
-JNIEXPORT jlong JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolACK_createPaymentProtocolACK
+JNIEXPORT jlong JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolACK_createPaymentProtocolACK
         (JNIEnv *env, jclass thisClass, jbyteArray dataByteArray) {
     size_t dataLen = (*env)->GetArrayLength(env, dataByteArray);
     const uint8_t *data = (uint8_t *) (*env)->GetByteArrayElements(env, dataByteArray, 0);
@@ -622,7 +621,7 @@ JNIEXPORT jlong JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolACK_creat
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolACK_serialize
+Java_com_ravencoin_core_BRCorePaymentProtocolACK_serialize
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolACK *ack = (BRPaymentProtocolACK *) getJNIReference (env, thisObject);
 
@@ -642,7 +641,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolACK_serialize
  * Signature: ()V
  */
 JNIEXPORT void JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolACK_disposeNative
+Java_com_ravencoin_core_BRCorePaymentProtocolACK_disposeNative
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolACK *ack = (BRPaymentProtocolACK *) getJNIReference (env, thisObject);
     if (NULL != ack) BRPaymentProtocolACKFree (ack);
@@ -653,7 +652,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolACK_disposeNative
  * Method:    initializeNative
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolACK_initializeNative
+JNIEXPORT void JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolACK_initializeNative
         (JNIEnv *env, jclass thisClass) {
     commonStaticInitialize(env);
 }
@@ -668,7 +667,7 @@ JNIEXPORT void JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolACK_initia
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getSenderPublicKeyReference
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_getSenderPublicKeyReference
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -684,7 +683,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getSenderPublicKey
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getAmount
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_getAmount
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -697,7 +696,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getAmount
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getPKIType
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_getPKIType
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -710,7 +709,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getPKIType
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getPKIData
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_getPKIData
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -727,7 +726,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getPKIData
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getMemo
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_getMemo
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -740,7 +739,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getMemo
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getNotifyURL
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_getNotifyURL
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -753,7 +752,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getNotifyURL
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getSignature
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_getSignature
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -770,7 +769,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_getSignature
  * Signature: ([B)J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_createPaymentProtocolInvoiceRequest
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_createPaymentProtocolInvoiceRequest
         (JNIEnv *env, jclass thisClass, jbyteArray dataByteArray) {
     size_t dataLen = (*env)->GetArrayLength(env, dataByteArray);
     const uint8_t *data = (uint8_t *) (*env)->GetByteArrayElements(env, dataByteArray, 0);
@@ -780,9 +779,9 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_createPaymentProto
 /*
  * Class:     com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest
  * Method:    createPaymentProtocolInvoiceRequestFull
- * Signature: (Lcom/ravenwallet/core/BRCoreKey;JLjava/lang/String;[BLjava/lang/String;Ljava/lang/String;[B)J
+ * Signature: (Lcom/ravencoin/core/BRCoreKey;JLjava/lang/String;[BLjava/lang/String;Ljava/lang/String;[B)J
  */
-JNIEXPORT jlong JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_createPaymentProtocolInvoiceRequestFull
+JNIEXPORT jlong JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_createPaymentProtocolInvoiceRequestFull
         (JNIEnv *env, jclass thisClass,
          jobject senderPublicKey, jlong amount,
          jstring pkiTypeString, jbyteArray pkiDataByteArray,
@@ -827,7 +826,7 @@ JNIEXPORT jlong JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRe
  * Method:    serialize
  * Signature: ()[B
  */
-JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_serialize
+JNIEXPORT jbyteArray JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_serialize
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference(env, thisObject);
@@ -848,7 +847,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolInvo
  * Signature: ()V
  */
 JNIEXPORT void JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_disposeNative
+Java_com_ravencoin_core_BRCorePaymentProtocolInvoiceRequest_disposeNative
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolInvoiceRequest *request =
             (BRPaymentProtocolInvoiceRequest *) getJNIReference (env, thisObject);
@@ -866,7 +865,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolInvoiceRequest_disposeNative
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getMessageTypeValue
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_getMessageTypeValue
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolMessage *message =
             (BRPaymentProtocolMessage *) getJNIReference (env, thisObject);
@@ -879,7 +878,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getMessageTypeValue
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getMessage
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_getMessage
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolMessage *message =
             (BRPaymentProtocolMessage *) getJNIReference(env, thisObject);
@@ -897,7 +896,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getMessage
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getStatusCode
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_getStatusCode
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolMessage *message =
             (BRPaymentProtocolMessage *) getJNIReference (env, thisObject);
@@ -910,7 +909,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getStatusCode
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getStatusMessage
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_getStatusMessage
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolMessage *message =
             (BRPaymentProtocolMessage *) getJNIReference (env, thisObject);
@@ -923,7 +922,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getStatusMessage
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getIdentifier
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_getIdentifier
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolMessage *message =
             (BRPaymentProtocolMessage *) getJNIReference (env, thisObject);
@@ -940,7 +939,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_getIdentifier
  * Signature: ([B)J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_createPaymentProtocolMessage
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_createPaymentProtocolMessage
         (JNIEnv *env, jclass thisClass, jbyteArray dataByteArray) {
     size_t dataLen = (*env)->GetArrayLength(env, dataByteArray);
     const uint8_t *data = (uint8_t *) (*env)->GetByteArrayElements(env, dataByteArray, 0);
@@ -953,7 +952,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_createPaymentProtocolMess
  * Signature: (I[BJLjava/lang/String;[B)J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_createPaymentProtocolMessageFull
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_createPaymentProtocolMessageFull
         (JNIEnv *env, jclass thisClass,
          jint messageType,
          jbyteArray messageByteArray,
@@ -978,7 +977,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_createPaymentProtocolMess
  * Method:    serialize
  * Signature: ()[B
  */
-JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_serialize
+JNIEXPORT jbyteArray JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolMessage_serialize
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolMessage *message =
             (BRPaymentProtocolMessage *) getJNIReference(env, thisObject);
@@ -999,7 +998,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolMess
  * Signature: ()V
  */
 JNIEXPORT void JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_disposeNative
+Java_com_ravencoin_core_BRCorePaymentProtocolMessage_disposeNative
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolMessage *message =
             (BRPaymentProtocolMessage *) getJNIReference (env, thisObject);
@@ -1016,7 +1015,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolMessage_disposeNative
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getMessage
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getMessage
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1033,7 +1032,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getMessage
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getReceiverPublicKeyReference
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getReceiverPublicKeyReference
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1049,7 +1048,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getReceiverPubli
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getSenderPublicKeyReference
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getSenderPublicKeyReference
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1065,7 +1064,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getSenderPublicK
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getNonce
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getNonce
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1078,7 +1077,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getNonce
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getSignature
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getSignature
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1095,7 +1094,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getSignature
  * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getIdentifier
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getIdentifier
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1113,7 +1112,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getIdentifier
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getStatusCode
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getStatusCode
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1126,7 +1125,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getStatusCode
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getStatusMessage
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_getStatusMessage
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1139,7 +1138,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_getStatusMessage
  * Signature: ([B)J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_createPaymentProtocolEncryptedMessage
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_createPaymentProtocolEncryptedMessage
         (JNIEnv *env, jclass thisClass, jbyteArray dataByteArray) {
     size_t dataLen = (*env)->GetArrayLength(env, dataByteArray);
     const uint8_t *data = (uint8_t *) (*env)->GetByteArrayElements(env, dataByteArray, 0);
@@ -1151,7 +1150,7 @@ Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_createPaymentPro
  * Method:    serialize
  * Signature: ()[B
  */
-JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_serialize
+JNIEXPORT jbyteArray JNICALL Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_serialize
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
@@ -1172,9 +1171,10 @@ JNIEXPORT jbyteArray JNICALL Java_com_ravenwallet_core_BRCorePaymentProtocolEncr
  * Signature: ()V
  */
 JNIEXPORT void JNICALL
-Java_com_ravenwallet_core_BRCorePaymentProtocolEncryptedMessage_disposeNative
+Java_com_ravencoin_core_BRCorePaymentProtocolEncryptedMessage_disposeNative
         (JNIEnv *env, jobject thisObject) {
     BRPaymentProtocolEncryptedMessage *message =
             (BRPaymentProtocolEncryptedMessage *) getJNIReference(env, thisObject);
     if (NULL != message) BRPaymentProtocolEncryptedMessageFree(message);
 }
+
